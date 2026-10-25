@@ -1,0 +1,24 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><meta name="robots" content="noindex">
+<title>TikTok Callback</title><link rel="stylesheet" href="../style.css"></head><body><main>
+<h1>TikTok authorization</h1>
+<div class="card" id="out"><p>Đang đọc kết quả…</p></div>
+<p class="muted">Trang này chỉ hiển thị mã trong trình duyệt của bạn, không gửi mã đi đâu. Mã chỉ dùng được một lần, hết hạn sau vài phút, và vô dụng nếu không có client secret.</p>
+</main>
+<script>
+(function () {
+  var p = new URLSearchParams(location.search);
+  var out = document.getElementById('out');
+  var esc = function (s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
+  if (p.get('error')) {
+    out.innerHTML = '<p><strong>Lỗi:</strong> ' + esc(p.get('error')) + '</p><p>' + esc(p.get('error_description') || '') + '</p>';
+  } else if (p.get('code')) {
+    out.innerHTML = '<p>Copy dòng dưới và dán vào script đang chờ trong terminal:</p><code id="c">' + esc(location.href) + '</code><button id="b">Copy</button>';
+    document.getElementById('b').onclick = function () {
+      navigator.clipboard.writeText(location.href).then(function () { document.getElementById('b').textContent = 'Đã copy ✓'; });
+    };
+  } else {
+    out.innerHTML = '<p>Không có mã xác nhận trong địa chỉ trang.</p>';
+  }
+})();
+</script></body></html>
